@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: #313338;
+  color: #e2b714;
+  font-family: 'Roboto Mono', monospace;
+  min-height: 100vh;
+}
+
+::selection {
+  background: #e2b714;
+  color: #313338;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #27292d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e2b714;
+  border-radius: 3px;
+}

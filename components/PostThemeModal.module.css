@@ -1,0 +1,148 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: #3b3d42;
+  border-radius: 12px;
+  padding: 32px;
+  width: min(480px, 90vw);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: 'Roboto Mono', monospace;
+  color: #e2b714;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.charCount {
+  margin-left: auto;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.75rem;
+}
+
+.input,
+.textarea {
+  background: #27292d;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  outline: none;
+  resize: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #e2b714;
+}
+
+.inputError {
+  border-color: #e55353 !important;
+}
+
+.error {
+  color: #e55353;
+  font-size: 0.78rem;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.infoWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+}
+
+.infoIcon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.infoWrap:hover .infoIcon {
+  opacity: 1;
+}
+
+.tooltip {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1e2023;
+  color: rgba(255,255,255,0.85);
+  font-size: 0.72rem;
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.5;
+  padding: 10px 13px;
+  border-radius: 6px;
+  width: 260px;
+  z-index: 10;
+  pointer-events: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  white-space: normal;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel,
+.post {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.cancel {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.7);
+}
+
+.cancel:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.post {
+  background: #e2b714;
+  color: #1e1f22;
+  font-weight: 700;
+}
+
+.post:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.post:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
