@@ -40,17 +40,42 @@ export default function Home() {
       </div>
 
       {/* Theme grid */}
-      {loading ? (
-        <div className={styles.loading}>loading themes...</div>
-      ) : themes.length === 0 ? (
-        <div className={styles.empty}>no themes yet. be the first to post one!</div>
-      ) : (
-        <div className={styles.grid}>
-          {themes.map(theme => (
-            <ThemeCard key={theme.id} theme={theme} />
-          ))}
-        </div>
-      )}
+{loading ? (
+  <div className={styles.loading}>
+    <svg
+      className={styles.spinner}
+      viewBox="0 0 16 16"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+    >
+      <g fill="#000000" fillRule="evenodd" clipRule="evenodd">
+        <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8z" opacity=".2"/>
+        <path d="M7.25.75A.75.75 0 018 0a8 8 0 018 8 .75.75 0 01-1.5 0A6.5 6.5 0 008 1.5a.75.75 0 01-.75-.75z"/>
+      </g>
+    </svg>
+    <span>Loading...</span>
+    <svg
+      className={styles.keyIcon}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <style>{`.cls-1{fill:none;stroke:#e2b712;stroke-miterlimit:10;stroke-width:1.95px;}`}</style>
+      </defs>
+      <rect className="cls-1" x="7.54" y="5.07" width="13.81" height="8.98" transform="translate(10.99 -7.41) rotate(45)"/>
+      <path className="cls-1" d="M16.15,17.62,14.6,19.17a2,2,0,0,1-2.76,0l-2-2L5,21.89a2.08,2.08,0,0,1-1.47.61h0A2.07,2.07,0,0,1,1.5,20.43h0A2.08,2.08,0,0,1,2.11,19L6.87,14.2l-2-2a2,2,0,0,1,0-2.76L6.38,7.85Z"/>
+      <line className="cls-1" x1="15.66" y1="4.43" x2="11.27" y2="8.83"/>
+    </svg>
+  </div>
+) : themes.length === 0 ? (
+  <div className={styles.empty}>no themes yet. be the first to post one!</div>
+) : (
+  <div className={styles.grid}>
+    {themes.map(theme => (
+      <ThemeCard key={theme.id} theme={theme} />
+    ))}
+  </div>
+)}
 
       {showModal && (
         <PostThemeModal
