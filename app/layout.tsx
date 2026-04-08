@@ -2,8 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'mtthemes',
-  description: 'Show off your custom Monkeytype themes.',
+  title: 'Monkeytype Themes',
+  description: 'Post and use other peoples themes for Monkeytype, for completely free.',
+  icons: {
+    icon: '/images/mtthemes.png',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
