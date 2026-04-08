@@ -1,14 +1,11 @@
 'use client';
-
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import styles from './PostThemeModal.module.css';
-
 type Props = {
   onClose: () => void;
   onPosted: () => void;
 };
-
 export default function PostThemeModal({ onClose, onPosted }: Props) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -17,13 +14,11 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
   const [linkError, setLinkError] = useState(false);
   const [posting, setPosting] = useState(false);
   const [tooltip, setTooltip] = useState(false);
-
   async function handlePost() {
     let valid = true;
     if (name.trim().length === 0) { setNameError(true); valid = false; } else setNameError(false);
-    if (link.trim().length === 0) { setLinkError(true); valid = false; } else setLinkError(false);
+    if (!link.trim().startsWith('https://monkeytype.com/?customTheme=')) { setLinkError(true); valid = false; } else setLinkError(false);
     if (!valid) return;
-
     setPosting(true);
     const { error } = await supabase.from('themes').insert({
       name: name.trim(),
@@ -36,11 +31,9 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
       onClose();
     }
   }
-
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
-
         <div className={styles.field}>
           <label className={styles.label}>Name of theme</label>
           <input
@@ -52,7 +45,6 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
           />
           {nameError && <span className={styles.error}>Must be at least 1 character.</span>}
         </div>
-
         <div className={styles.field}>
           <label className={styles.label}>
             Link to theme
@@ -74,12 +66,11 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
           <input
             className={`${styles.input} ${linkError ? styles.inputError : ''}`}
             value={link}
-            onChange={e => { setLink(e.target.value); if (e.target.value.trim()) setLinkError(false); }}
+            onChange={e => { setLink(e.target.value); if (e.target.value.trim().startsWith('https://monkeytype.com/?customTheme=')) setLinkError(false); }}
             placeholder="https://monkeytype.com/..."
           />
-          {linkError && <span className={styles.error}>Must be at least 1 character.</span>}
+          {linkError && <span className={styles.error}>This doesn&apos;t meet the requirements.</span>}
         </div>
-
         <div className={styles.field}>
           <label className={styles.label}>
             Description for theme
@@ -94,7 +85,6 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
             rows={3}
           />
         </div>
-
         <div className={styles.actions}>
           <button className={styles.cancel} onClick={onClose}>Cancel</button>
           <button className={styles.post} onClick={handlePost} disabled={posting}>
