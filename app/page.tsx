@@ -35,7 +35,7 @@ export default function Home() {
 
       {/* Top-center: Branding */}
       <div className={styles.topCenter}>
-        <h1 className={styles.logo}>mtthemes</h1>
+        <h1 className={styles.logo}>Monkeytype Themes</h1>
         <p className={styles.disclaimer}>Not endorsed or promoted by miodec.</p>
       </div>
 
