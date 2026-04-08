@@ -69,3 +69,31 @@
   font-size: 0.9rem;
   padding-top: 80px;
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  opacity: 0.5;
+  animation: spin 1.2s linear infinite;
+}
+
+.keyIcon {
+  width: 22px;
+  height: 22px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
