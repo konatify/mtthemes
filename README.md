@@ -1,77 +1,22 @@
-# mtthemes
+[![mtthemes](https://mtthemes.mtgoals.cc/images/readme_picture.png)](https://mtthemes.mtgoals.cc/)
+<br />
 
-> A fan project for sharing custom Monkeytype themes. Not endorsed or promoted by miodec.
+[![HTML5](https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://html.com)
+[![CSS3](https://img.shields.io/badge/CSS3-%231572B6?style=for-the-badge&logo=css&logoColor=white)](https://wikipedia.org/wiki/css)
+[![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)](https://wikipedia.org/wiki/javascript)
+[![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![Monkeytype](https://img.shields.io/badge/MT%20FAN%20PROJECT-E2B714?style=for-the-badge&logo=monkeytype&logoColor=white)](https://monkeytype.com)
 
-## Stack
+# About
+Post & use other people's themes in Monkeytype for absolutely free!
 
-- **Frontend**: Next.js 14 (App Router) + TypeScript
-- **Database**: Supabase (Postgres + Row Level Security)
-- **Hosting**: Vercel
-- **No server needed** — Supabase handles everything, keys are locked behind Vercel env vars.
+# Data Management
+We don't take any data from you, including your personal information such as legal name, house address, credit card numbers, etc... Monkeytype Goals is a website designed to help users track goals for the typing test website Monkeytype, so it would be quite pointless to add tracking
 
----
+More information; [Privacy Policy page](https://www.mtgoals.cc/pages/policy)
 
-## Setup
+# Discord server
+We have a Discord server for our main project, 'Monkeytype Goals', but you can also speak about mtthemes there as well! go ahead and join by clicking [here](https://dsc.gg/mtgoals)
 
-### 1. Supabase
-
-1. Create a project at [supabase.com](https://supabase.com)
-2. Go to **SQL Editor** and run the contents of `supabase_schema.sql`
-3. Copy your **Project URL** and **anon public key** from Settings → API
-
-### 2. Local dev
-
-```bash
-# Clone and install
-npm install
-
-# Create your local env file
-cp .env.example .env.local
-# Fill in your Supabase URL and anon key in .env.local
-
-npm run dev
-# → http://localhost:3000
-```
-
-### 3. Deploy to Vercel
-
-1. Push this repo to GitHub
-2. Import it in [vercel.com](https://vercel.com)
-3. In your Vercel project → **Settings → Environment Variables**, add:
-   - `NEXT_PUBLIC_SUPABASE_URL` — your Supabase project URL
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — your Supabase anon key
-4. Deploy — done!
-
-> ⚠️ Never commit `.env.local`. It's gitignored by default in Next.js.
-> The anon key is safe to expose client-side (Supabase's RLS policies protect your data),
-> but keeping it in env vars means no one can scrape it from your source code on GitHub.
-
----
-
-## Project structure
-
-```
-mtthemes/
-├── app/
-│   ├── globals.css          # Global styles + Roboto Mono
-│   ├── layout.tsx           # Root layout
-│   ├── page.tsx             # Main page
-│   └── page.module.css
-├── components/
-│   ├── PostThemeModal.tsx   # Upload popup
-│   ├── PostThemeModal.module.css
-│   ├── ThemeCard.tsx        # Individual theme card
-│   └── ThemeCard.module.css
-├── lib/
-│   ├── supabase.ts          # Supabase client (reads from env)
-│   └── fingerprint.ts       # Anonymous like fingerprinting
-├── supabase_schema.sql      # Run this in Supabase SQL editor
-├── .env.example             # Copy to .env.local
-└── vercel.json
-```
-
----
-
-## How likes work
-
-No accounts needed. Each browser gets a random ID saved to `localStorage`. This prevents the same person from liking a theme multiple times, without needing sign-up. It's not bulletproof (clearing localStorage resets it) but it's good enough for a fan project.
+# License
+Our project uses the MIT License, to view the license, you can click [this](https://github.com/konatify/mtthemes/blob/main/LICENSE)
