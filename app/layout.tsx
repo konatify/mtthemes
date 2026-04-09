@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/images/mtthemes.png',
   },
+  themeColor: '#e2b714',
+  openGraph: {
+    title: 'Monkeytype Themes',
+    description: 'Post and use other peoples themes for Monkeytype, for completely free.',
+    images: ['/images/readme_picture.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
