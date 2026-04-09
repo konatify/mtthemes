@@ -2,10 +2,16 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import styles from './PostThemeModal.module.css';
+
 type Props = {
   onClose: () => void;
   onPosted: () => void;
 };
+
+const isValidLink = (val: string) =>
+  val.trim().startsWith('https://monkeytype.com/?customTheme=') ||
+  val.trim().startsWith('https://monkeytype.com?customTheme=');
+
 export default function PostThemeModal({ onClose, onPosted }: Props) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -14,10 +20,11 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
   const [linkError, setLinkError] = useState(false);
   const [posting, setPosting] = useState(false);
   const [tooltip, setTooltip] = useState(false);
+
   async function handlePost() {
     let valid = true;
     if (name.trim().length === 0) { setNameError(true); valid = false; } else setNameError(false);
-    if (!link.trim().startsWith('https://monkeytype.com/?customTheme=')) { setLinkError(true); valid = false; } else setLinkError(false);
+    if (!isValidLink(link)) { setLinkError(true); valid = false; } else setLinkError(false);
     if (!valid) return;
     setPosting(true);
     const { error } = await supabase.from('themes').insert({
@@ -31,6 +38,7 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
       onClose();
     }
   }
+
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
@@ -66,7 +74,7 @@ export default function PostThemeModal({ onClose, onPosted }: Props) {
           <input
             className={`${styles.input} ${linkError ? styles.inputError : ''}`}
             value={link}
-            onChange={e => { setLink(e.target.value); if (e.target.value.trim().startsWith('https://monkeytype.com?customTheme=')) setLinkError(false); }}
+            onChange={e => { setLink(e.target.value); if (isValidLink(e.target.value)) setLinkError(false); }}
             placeholder="https://monkeytype.com?..."
           />
           {linkError && <span className={styles.error}>This doesn&apos;t meet the requirements.</span>}
