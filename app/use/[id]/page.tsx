@@ -1,26 +1,20 @@
-import { supabase } from '@/lib/supabase';
-import { redirect } from 'next/navigation';
-
 export default async function UseThemeRedirect({ params }: { params: { id: string } }) {
   const targetId = params.id;
   
-console.log("DEBUG: Current Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const cleanId = targetId.trim();
 
-const { data, error } = await supabase
-  .from('themes')
-  .select('link')
-  .eq('share_id', params.id)
-  .maybeSingle();
+  const { data, error } = await supabase
+    .from('themes')
+    .select('link')
+    .eq('share_id', cleanId)
+    .maybeSingle();
 
-  if (error) {
-    console.error("SERVER DEBUG - Supabase Error:", error);
-    return <div>Error: {error.message}</div>;
-  }
+  console.log("DEBUG: Searching for ID:", cleanId);
+  console.log("DEBUG: Supabase Result:", data);
+  console.log("DEBUG: Supabase Error:", error);
 
-  if (!data) {
-    console.log("SERVER DEBUG - Data returned NULL");
-    return <div>Theme not found.</div>;
-  }
+  if (error) return <div>Error: {error.message}</div>;
+  if (!data) return <div>Theme not found. (Tried searching for: {cleanId})</div>;
 
   redirect(data.link);
 }
