@@ -49,7 +49,7 @@ export default function ThemeCard({ theme }: Props) {
 
   // --- NEW: Share handler ---
   function handleShare() {
-    const shareLink = `${window.location.origin}/theme/${theme.id}`;
+    const shareLink = `${window.location.origin}/theme/${theme.share_id}`;
     navigator.clipboard.writeText(shareLink);
     alert('Link copied to clipboard!'); // Optional: Replace with a nicer toast notification if you have one
   }
