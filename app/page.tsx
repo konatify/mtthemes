@@ -107,7 +107,7 @@ export default function Home() {
       ) : (
         <div className={styles.grid}>
           {filteredThemes.map(theme => (
-            <ThemeCard key={theme.id} theme={theme} />
+            <ThemeCard key={theme.share_id} theme={theme} />
           ))}
         </div>
       )}
