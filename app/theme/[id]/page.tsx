@@ -3,11 +3,22 @@ import ThemeCard from '@/components/ThemeCard';
 import { notFound } from 'next/navigation';
 
 export default async function ThemePage({ params }: { params: { id: string } }) {
-  const { data: theme, error } = await supabase
+  let { data: theme, error } = await supabase
     .from('themes')
     .select('*')
     .eq('share_id', params.id)
     .single();
+
+  if (!theme || error) {
+    const { data: fallbackTheme, error: fallbackError } = await supabase
+      .from('themes')
+      .select('*')
+      .eq('id', params.id)
+      .single();
+      
+    theme = fallbackTheme;
+    error = fallbackError;
+  }
 
   if (error || !theme) {
     notFound();
