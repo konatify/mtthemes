@@ -1,29 +1,23 @@
-// PLASEAAERE WORK
 import { supabase } from '@/lib/supabase';
 import { redirect } from 'next/navigation';
 
-export default async function UseThemeRedirect({ params }: { params: { id: string } }) {
-  const cleanId = params.id.trim();
+export default async function UseThemeRedirect({ params }: { params: Promise<{ id: string }> }) {
+  
+  const resolvedParams = await params;
+  const id = resolvedParams?.id;
+
+  if (!id) {
+    return <div>Theme ID not found in URL.</div>;
+  }
 
   const { data, error } = await supabase
     .from('themes')
     .select('link')
-    .eq('share_id', cleanId)
+    .eq('share_id', id.trim())
     .maybeSingle();
 
-  if (error) {
-    console.error("Supabase error:", error);
-    return <div>Error loading theme.</div>;
-  }
-
-  if (!data) {
-    return (
-      <div style={{ color: 'white', padding: '20px' }}>
-        <h1>Theme not found</h1>
-        <p>We searched for ID: <strong>{cleanId}</strong></p>
-        <p>Please check the database to ensure this share_id exists exactly as shown.</p>
-      </div>
-    );
+  if (error || !data) {
+    return <div>Theme not found.</div>;
   }
 
   redirect(data.link);
