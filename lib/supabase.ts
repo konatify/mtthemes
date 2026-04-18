@@ -12,4 +12,5 @@ export type Theme = {
   description: string | null;
   likes: number;
   created_at: string;
+  share_id: string;
 };
