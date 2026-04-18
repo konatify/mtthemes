@@ -2,26 +2,18 @@ import { supabase } from '@/lib/supabase';
 import { redirect } from 'next/navigation';
 
 export default async function UseThemeRedirect({ params }: { params: { id: string } }) {
-  const targetId = params.id;
-  
-  console.log("DEBUG: Looking for share_id:", targetId);
-
   const { data, error } = await supabase
     .from('themes')
     .select('link')
-    .eq('share_id', targetId)
-    .single();
+    .eq('share_id', params.id)
+    .maybeSingle();
 
-  if (error) console.error("DEBUG: Supabase Error:", error);
-  if (!data) console.log("DEBUG: Database returned no results for:", targetId);
+  if (error) {
+    return <div>Database Error.</div>;
+  }
 
-  if (error || !data) {
-    return (
-      <div style={{ color: 'white', padding: '20px' }}>
-        <h1>Theme not found.</h1>
-        <p>Check the console/terminal logs. The ID <strong>{targetId}</strong> does not exist in the 'share_id' column.</p>
-      </div>
-    );
+  if (!data) {
+    return <div>Theme not found. Check your share_id.</div>;
   }
 
   redirect(data.link);
