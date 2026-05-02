@@ -1,25 +1,15 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { supabase, Theme } from '@/lib/supabase';
-import { getViewedIds } from '@/lib/history';
+import { getViewedIds, colorSimilarityScore } from '@/lib/history';
 import PostThemeModal from '@/components/PostThemeModal';
 import ThemeCard from '@/components/ThemeCard';
 import SortDropdown, { SortMode } from '@/components/SortDropdown';
 import styles from './page.module.css';
 
-function tokenSimilarity(a: string, b: string): number {
-  const tokenize = (s: string) =>
-    new Set(s.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean));
-  const setA = tokenize(a);
-  const setB = tokenize(b);
-  if (setA.size === 0 || setB.size === 0) return 0;
-  let intersection = 0;
-  setA.forEach(t => { if (setB.has(t)) intersection++; });
-  return intersection / (setA.size + setB.size - intersection);
-}
-
+/** Score a theme by color palette similarity to the user's viewed themes. */
 function scoreForYou(theme: Theme, viewedIds: string[], allThemes: Theme[]): number {
-  if (viewedIds.includes(theme.id)) return -1;
+  if (viewedIds.includes(theme.id)) return -1; // push already-seen to bottom
 
   const viewedThemes = viewedIds
     .map(id => allThemes.find(t => t.id === id))
@@ -27,14 +17,7 @@ function scoreForYou(theme: Theme, viewedIds: string[], allThemes: Theme[]): num
 
   if (viewedThemes.length === 0) return 0;
 
-  const themeText = `${theme.name} ${theme.description ?? ''}`;
-  let maxSim = 0;
-  for (const v of viewedThemes) {
-    const viewedText = `${v.name} ${v.description ?? ''}`;
-    const sim = tokenSimilarity(themeText, viewedText);
-    if (sim > maxSim) maxSim = sim;
-  }
-  return maxSim;
+  return colorSimilarityScore(theme.link, viewedThemes.map(t => t.link));
 }
 
 export default function Home() {
@@ -71,7 +54,7 @@ export default function Home() {
     // for-you
     const viewedIds = getViewedIds();
     if (viewedIds.length === 0) {
-      // if no history yet, show the latest ones.
+      // No history yet — fall back to latest
       return arr.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
     }
     return arr.sort((a, b) => scoreForYou(b, viewedIds, themes) - scoreForYou(a, viewedIds, themes));
