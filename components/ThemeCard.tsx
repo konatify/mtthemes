@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase, Theme } from '@/lib/supabase';
 import { getFingerprint } from '@/lib/fingerprint';
+import { recordView } from '@/lib/history';
 import styles from './ThemeCard.module.css';
 
 type Props = {
@@ -47,12 +48,15 @@ export default function ThemeCard({ theme }: Props) {
     setLoading(false);
   }
 
-// Inside ThemeCard.tsx
 function handleShare() {
   const shareLink = `${window.location.origin}/use/${theme.share_id}`;
   navigator.clipboard.writeText(shareLink);
   alert('Link copied! This will redirect users to the theme.');
 }
+
+  function handleUse() {
+    recordView(theme.id);
+  }
   
   return (
     <div className={styles.card}>
@@ -67,16 +71,15 @@ function handleShare() {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.useBtn}
+          onClick={handleUse}
         >
           Use theme
         </a>
 
-        {/* Wrapped buttons to keep them grouped nicely on the right side */}
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           
-          {/* --- NEW: Share Button --- */}
           <button
-            className={styles.likeBtn} // Reusing your likeBtn styles for consistency
+            className={styles.likeBtn}
             onClick={handleShare}
             aria-label="Share Theme"
             title="Copy theme link"
@@ -85,7 +88,7 @@ function handleShare() {
               viewBox="0 0 16 16" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
-              className={styles.heartSvg} // Reusing for consistent sizing
+              className={styles.heartSvg}
             >
               <g strokeWidth="0"></g>
               <g strokeLinecap="round" strokeLinejoin="round"></g>
@@ -97,7 +100,6 @@ function handleShare() {
             </svg>
           </button>
 
-          {/* Existing Like Button */}
           <button
             className={`${styles.likeBtn} ${liked ? styles.liked : ''}`}
             onClick={toggleLike}
